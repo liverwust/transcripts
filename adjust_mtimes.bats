@@ -69,11 +69,11 @@ teardown() {
 	touch "${input_directory}/file3.flac"
 	touch "${input_directory}/file1.mp3"
 	touch "${input_directory}/file2.ogg"
-	echo 0 > "${output_directory}/converted000.ogg"
-	echo 1 > "${output_directory}/converted001.ogg"
-	echo 2 > "${output_directory}/converted002.ogg"
-	# ctime ordering *does* matter for output
-	echo 3 > "${output_directory}/converted003.ogg"
+	# ctime ordering *does* matter for output; sleep to be sure
+	echo 0 > "${output_directory}/converted000.ogg" && sleep 0.1
+	echo 1 > "${output_directory}/converted001.ogg" && sleep 0.1
+	echo 2 > "${output_directory}/converted002.ogg" && sleep 0.1
+	echo 3 > "${output_directory}/converted003.ogg" && sleep 0.1
 	run $script
 	[ "$status" -eq 0 ]
 	# no CarNoise in output
@@ -85,7 +85,7 @@ teardown() {
 
 @test "Nominal case, check mtimes" {
 	touch "${input_directory}/000_CarNoise.ogg"
-	touch -d @1565000000 "${output_directory}/file1.mp3"
+	touch -d @1565000000 "${input_directory}/file1.mp3"
 	touch "${output_directory}/converted.ogg"
 	touch "${output_directory}/converted000.ogg"
 	run $script

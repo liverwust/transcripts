@@ -46,7 +46,16 @@ fi
 
 # Everything looks good, so go ahead and transfer file attributes
 seq 1 `cat "$input_listing" | wc -l` | while read i; do
-	echo $i
+	input_filename=`head -n$i "$input_listing" | tail -n1`
+	output_filename=`head -n$i "$output_listing" | tail -n1`
+	if [ $i -eq 1 ]; then
+		# Remove the otherwise useless CarNoise file from output
+		rm "$output_directory/$output_filename"
+	else
+		input_filename_wo_ext=`echo "$input_filename" | sed -r "s/\\.[a-zA-Z0-9]+\$//"`
+		touch -r "$input_directory/$input_filename" "$output_directory/$output_filename"
+		mv "$output_directory/$output_filename" "$output_directory/${input_filename_wo_ext}_processed.ogg"
+	fi
 done
 
 rm "$input_listing"
