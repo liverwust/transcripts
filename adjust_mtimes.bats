@@ -21,7 +21,7 @@ teardown() {
 }
 
 @test "Empty directories are OK" {
-	run $script
+	run dash $script
 	[ "$status" -eq 0 ]
 	[ "$output" = "" ]
 }
@@ -31,7 +31,7 @@ teardown() {
 	touch "${input_directory}/StillWrong.mp3"
 	touch "${output_directory}/NotRight_processed.mp3"
 	touch "${output_directory}/StillWrong_processed.mp3"
-	run $script
+	run dash $script
 	[ "$status" -eq 1 ]
 	[ $(echo "$output" | grep -icE "CarNoise.*first file") -gt 0 ]
 }
@@ -46,7 +46,7 @@ teardown() {
 	touch "${output_directory}/Junk_processed.ogg"
 	touch "${output_directory}/CarNoise_processed.ogg"
 	export ADJUST_MTIME_BATS_OGGINFO=$executable
-	run $script
+	run dash $script
 	[ "$status" -eq 1 ]
 	[ $(echo "$output" | grep -ic "identify CarNoise") -gt 0 ]
 	rm $executable
@@ -58,7 +58,7 @@ teardown() {
 	touch "${input_directory}/OK2.ogg"
 	touch "${output_directory}/CarNoise_processed.ogg"
 	touch "${output_directory}/OK1_processed.ogg"
-	run $script
+	run dash $script
 	[ "$status" -eq 1 ]
 	[ $(echo "$output" | grep -ic "too few") -gt 0 ]
 }
@@ -74,7 +74,7 @@ teardown() {
 	echo 1 > "${output_directory}/converted001.ogg" && sleep 0.1
 	echo 2 > "${output_directory}/converted002.ogg" && sleep 0.1
 	echo 3 > "${output_directory}/converted003.ogg" && sleep 0.1
-	run $script
+	run dash $script
 	[ "$status" -eq 0 ]
 	# no CarNoise in output
 	[ $(ls $output_directory | wc -l) -eq 3 ]
@@ -88,7 +88,7 @@ teardown() {
 	touch -d @1565000000 "${input_directory}/file1.mp3"
 	touch "${output_directory}/converted.ogg"
 	touch "${output_directory}/converted000.ogg"
-	run $script
+	run dash $script
 	[ "$status" -eq 0 ]
 	[ $(stat -c "%Y" "${output_directory}/file1_processed.ogg") = 1565000000 ]
 }
