@@ -1,0 +1,8 @@
+Development prerequisites:
+* bats (bash-centric unit testing framework)
+* dash (lightweight POSIX-compatible shell)
+
+Be sure to update the tests in adjust_mtimes.bats whenever updating code
+in adjust_mtimes.sh.
+
+Run tests with "bats ." (current directory)

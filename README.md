@@ -43,9 +43,9 @@ Workflow
 3.  Start recording; don't worry about leaving silence to think
 4.  Stop recording
 5.  Later, once off the road, rename & upload the file (e.g., w/ QFile)
-6.  Download the file to a computer with Audacity
+6.  Download the file to a computer with Audacity, to /tmp/macro-input
 7.  Set up the _Remove Car Noise_ macro to match the included PNG
 8.  Run the macro on __Files...__, and select CarNoise.flac (not
     included) first, before any other files
-9.  Manually rename /tmp/macro-export files and set their mtimes
-10. Upload the xx\_processed.ogg file to the NAS
+9.  Run the adjust\_mtimes.sh script with no arguments
+10. Upload the xx\_processed.ogg files from /tmp/macro-output to NAS
