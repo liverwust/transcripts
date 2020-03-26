@@ -15,7 +15,7 @@ Components
 * [Sony Xperia XA2][2] or other Android handset
 * [axet android-audio-recorder][3]
 * [Audacity][4]
-* 15-sec FLAC file (48kHz) of car noise; not saved in Git
+* 15-sec WAV file (48kHz) of car noise; not saved in Git
 
 [1]: https://www.lg.com/sa_en/support/support-product/lg-HBS-920
 [2]: https://www.sonymobile.com/us/products/phones/xperia-xa2/
@@ -45,7 +45,7 @@ Workflow
 5.  Later, once off the road, rename & upload the file (e.g., w/ QFile)
 6.  Download the file to a computer with Audacity, to /tmp/macro-input
 7.  Set up the _Remove Car Noise_ macro to match the included PNG
-8.  Run the macro on __Files...__, and select CarNoise.flac (not
+8.  Run the macro on __Files...__, and select CarNoise.wav (not
     included) first, before any other files
 9.  Run the adjust\_mtimes.sh script with no arguments
 10. Upload the xx\_processed.ogg files from /tmp/macro-output to NAS
