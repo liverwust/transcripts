@@ -44,8 +44,11 @@ Workflow
 4.  Stop recording
 5.  Later, once off the road, rename & upload the file (e.g., w/ QFile)
 6.  Download the file to a computer with Audacity, to /tmp/macro-input
-7.  Set up the _Remove Car Noise_ macro to match the included PNG
-8.  Run the macro on __Files...__, and select CarNoise.wav (not
-    included) first, before any other files
-9.  Run the adjust\_mtimes.sh script with no arguments
-10. Upload the xx\_processed.ogg files from /tmp/macro-output to NAS
+7.  Copy CarNoise.wav (not included) into /tmp/macro-input as well, and
+    rename it so that it will be sorted first (e.g., 000-CarNoise.wav)
+8.  Set up the _Remove Car Noise_ macro to match the included PNG
+9.  Run the macro on __Files...__, and select all files in
+    /tmp/macro-input -- note that Audacity seems to have problems when
+    more than 100 files are selected
+10. Run the adjust\_mtimes.sh script with no arguments
+11. Upload the xx\_processed.ogg files from /tmp/macro-output to NAS
