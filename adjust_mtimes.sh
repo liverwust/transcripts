@@ -16,7 +16,8 @@ input_listing_without_extensions=`mktemp`
 output_listing=`mktemp`
 
 # Input is assumed to be sorted alphabetically
-ls -1 "$input_directory" > "$input_listing"
+# Note that Audacity uses ASCII sorting internally (upper-case < lower-case)
+LC_COLLATE=C ls -1 "$input_directory" > "$input_listing"
 sed -r 's/\.[a-zA-Z0-9]+$//' < "$input_listing" > "$input_listing_without_extensions"
 # Output sorting is based on oldest (1st processed) to newest (last)
 ls -1 -tr "$output_directory" | tail -n `cat "$input_listing" | wc -l` > "$output_listing"
