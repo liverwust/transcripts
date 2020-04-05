@@ -92,3 +92,20 @@ teardown() {
 	[ "$status" -eq 0 ]
 	[ $(stat -c "%Y" "${output_directory}/file1_processed.ogg") = 1565000000 ]
 }
+
+@test "Exceptional case, shared filename w/ different extensions" {
+	touch "${input_directory}/000_CarNoise.ogg"
+	touch "${input_directory}/file1.flac"
+	touch "${input_directory}/file1.mp3"
+	touch "${input_directory}/file1.ogg"
+	touch "${output_directory}/converted.ogg"
+	touch "${output_directory}/converted000.ogg"
+	touch "${output_directory}/converted001.ogg"
+	touch "${output_directory}/converted002.ogg"
+	run dash $script
+	[ "$status" -ne 0 ]
+	[ $(echo "$output" | grep -ic "duplicate") -gt 0 ]
+	# Should have exited before touching any files
+	[ $(ls "${input_directory}" | wc -l) -eq 4 ]
+	[ $(ls "${output_directory}" | wc -l) -eq 4 ]
+}
