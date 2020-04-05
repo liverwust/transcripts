@@ -93,6 +93,23 @@ teardown() {
 	[ $(stat -c "%Y" "${output_directory}/file1_processed.ogg") = 1565000000 ]
 }
 
+@test "Nominal case, ensure file sorting is compatible with Audacity" {
+	touch "${input_directory}/000_CarNoise.ogg"
+	# Audacity processes all uppercase filenames before any lowercase ones
+	touch "${input_directory}/alice.ogg"
+	touch "${input_directory}/Bob.mp3"
+	# ctime ordering *does* matter for output; sleep to be sure
+	echo 000_CarNoise > "${output_directory}/converted000.ogg" && sleep 0.1
+	echo Bob          > "${output_directory}/converted001.ogg" && sleep 0.1
+	echo alice        > "${output_directory}/converted002.ogg" && sleep 0.1
+	run dash $script
+	[ "$status" -eq 0 ]
+	# no CarNoise in output
+	[ $(ls $output_directory | wc -l) -eq 2 ]
+	[ $(cat "${output_directory}/alice_processed.ogg") = "alice" ]
+	[ $(cat "${output_directory}/Bob_processed.ogg")   = "Bob"   ]
+}
+
 @test "Exceptional case, shared filename w/ different extensions" {
 	touch "${input_directory}/000_CarNoise.ogg"
 	touch "${input_directory}/file1.flac"
